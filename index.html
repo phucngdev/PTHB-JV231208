@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function Product(
+        productId,
+        productName,
+        price,
+        image,
+        description,
+        createdAt
+      ) {
+        this.productId = productId;
+        this.productName = productName;
+        this.price = price;
+        this.image = image;
+        this.description = description;
+        this.createdAt = createdAt;
+      }
+      let products = [];
+      let addMore;
+      function addNewProduct() {
+        let productId, productName, price, image, description, createdAt;
+
+        do {
+          productId = parseInt(prompt("Nhập ID sản phẩm:"));
+          productName = prompt("Nhập tên sản phẩm:");
+          price = parseFloat(prompt("Nhập giá sản phẩm:"));
+          image = prompt("Nhập đường dẫn ảnh sản phẩm:");
+          description = prompt("Nhập mô tả sản phẩm:");
+          createdAt = prompt("Nhập ngày tạo sản phẩm (yyyy-mm-dd):");
+
+          const existingProduct = products.find(
+            (product) => product.productId === productId
+          );
+          if (existingProduct) {
+            alert("id không được trug");
+            continue;
+          }
+
+          let newProduct = new Product(
+            productId,
+            productName,
+            price,
+            image,
+            description,
+            createdAt
+          );
+          products.push(newProduct);
+          addMore = prompt("thêm sản phẩm khác ko? (yes/no)").toLowerCase();
+          if (addMore !== "yes") {
+            break;
+          }
+        } while (true);
+      }
+
+      function showProduct() {
+        console.log("Danh sách sản phẩm:");
+        products.forEach((product) => console.log(product));
+      }
+
+      function searchProduct(name) {
+        let foundProducts = products.filter((product) =>
+          product.productName.toLowerCase().includes(name.toLowerCase())
+        );
+        console.log("Kết quả:", foundProducts);
+      }
+
+      function sortProducts() {
+        products.sort((a, b) => a.price - b.price);
+        console.log("mảng mới: ", products);
+      }
+
+      function filterProducts() {
+        let check = products.filter((product) => product.price > 100000);
+        console.log("sp > 100k:", check);
+      }
+
+      addNewProduct();
+      showProduct();
+      // searchProduct("abc");
+      sortProducts();
+      filterProducts();
+    </script>
+  </body>
+</html>
